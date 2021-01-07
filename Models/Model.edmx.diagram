@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d72f7f3d7c6c419eb3a1f53efb54aa95" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="ProjetoTCCHospitalModel.Especialidade" Width="1.5" PointX="6.625" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoTCCHospitalModel.Hospital" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoTCCHospitalModel.HospitalEspecialidade" Width="1.5" PointX="4.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoTCCHospitalModel.Medico" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoTCCHospitalModel.sysdiagrams" Width="1.5" PointX="8.625" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjetoTCCHospitalModel.Usuario" Width="1.5" PointX="5.875" PointY="1.625" IsExpanded="true" />
+        <AssociationConnector Association="ProjetoTCCHospitalModel.FK_HospitalEspecialidade_Especialidade" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoTCCHospitalModel.FK_HospitalEspecialidade_Hospital" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjetoTCCHospitalModel.HospitalMedico" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ProjetoTCCHospitalModel.usuarioHospital" Width="1.5" PointX="3.125" PointY="1.5" />
+        <AssociationConnector Association="ProjetoTCCHospitalModel.idHospital" />
+        <AssociationConnector Association="ProjetoTCCHospitalModel.idUsuario" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

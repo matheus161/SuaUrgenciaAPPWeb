@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ProjetoTCCHospitalModelStoreContainer" CdmEntityContainer="ProjetoTCCHospitalEntities">
+    <EntitySetMapping Name="Especialidade">
+      <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.Especialidade">
+        <MappingFragment StoreEntitySet="Especialidade">
+          <ScalarProperty Name="IdEspecialidade" ColumnName="IdEspecialidade" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Hospital">
+      <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.Hospital">
+        <MappingFragment StoreEntitySet="Hospital">
+          <ScalarProperty Name="IdHospital" ColumnName="IdHospital" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+          <ScalarProperty Name="Latidude" ColumnName="Latidude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+          <ScalarProperty Name="Telefone2" ColumnName="Telefone2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HospitalEspecialidade">
+      <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.HospitalEspecialidade">
+        <MappingFragment StoreEntitySet="HospitalEspecialidade">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="IdHospital" ColumnName="IdHospital" />
+          <ScalarProperty Name="IdEspecialidade" ColumnName="IdEspecialidade" />
+          <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+          <ScalarProperty Name="HoraFim" ColumnName="HoraFim" />
+          <ScalarProperty Name="Disponibilidade" ColumnName="Disponibilidade" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Medico">
+      <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.Medico">
+        <MappingFragment StoreEntitySet="Medico">
+          <ScalarProperty Name="IdMedico" ColumnName="IdMedico" />
+          <ScalarProperty Name="Nome" ColumnName="Nome" />
+          <ScalarProperty Name="CRM" ColumnName="CRM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.sysdiagrams">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuario">
+      <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuario">
+          <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Senha" ColumnName="Senha" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="HospitalMedico" TypeName="ProjetoTCCHospitalModel.HospitalMedico" StoreEntitySet="HospitalMedico">
+      <EndProperty Name="Hospital">
+        <ScalarProperty Name="IdHospital" ColumnName="IdHospital" />
+      </EndProperty>
+      <EndProperty Name="Medico">
+        <ScalarProperty Name="IdMedico" ColumnName="IdMedico" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <EntitySetMapping Name="usuarioHospital">
+      <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.usuarioHospital">
+        <MappingFragment StoreEntitySet="usuarioHospital">
+          <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+          <ScalarProperty Name="idHospital" ColumnName="idHospital" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

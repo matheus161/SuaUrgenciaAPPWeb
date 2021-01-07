@@ -1,0 +1,458 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProjetoTCCHospitalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Especialidade">
+          <Key>
+            <PropertyRef Name="IdEspecialidade" />
+          </Key>
+          <Property Name="IdEspecialidade" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hospital">
+          <Key>
+            <PropertyRef Name="IdHospital" />
+          </Key>
+          <Property Name="IdHospital" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Endereco" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Latidude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
+          <Property Name="Longitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
+          <Property Name="Telefone" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Telefone2" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HospitalEspecialidade">
+          <Key>
+            <PropertyRef Name="IdHospital" />
+            <PropertyRef Name="IdEspecialidade" />
+          </Key>
+          <Property Name="IdHospital" Type="int" Nullable="false" />
+          <Property Name="IdEspecialidade" Type="int" Nullable="false" />
+          <Property Name="HoraInicio" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="HoraFim" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Disponibilidade" Type="bit" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HospitalMedico">
+          <Key>
+            <PropertyRef Name="IdMedico" />
+            <PropertyRef Name="IdHospital" />
+          </Key>
+          <Property Name="IdMedico" Type="int" Nullable="false" />
+          <Property Name="IdHospital" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Medico">
+          <Key>
+            <PropertyRef Name="IdMedico" />
+          </Key>
+          <Property Name="IdMedico" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CRM" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Senha" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuarioHospital">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="idHospital" Type="int" />
+          <Property Name="idUsuario" Type="int" />
+        </EntityType>
+        <Association Name="FK_HospitalEspecialidade_Especialidade">
+          <End Role="Especialidade" Type="Self.Especialidade" Multiplicity="1" />
+          <End Role="HospitalEspecialidade" Type="Self.HospitalEspecialidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidade">
+              <PropertyRef Name="IdEspecialidade" />
+            </Principal>
+            <Dependent Role="HospitalEspecialidade">
+              <PropertyRef Name="IdEspecialidade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HospitalEspecialidade_Hospital">
+          <End Role="Hospital" Type="Self.Hospital" Multiplicity="1" />
+          <End Role="HospitalEspecialidade" Type="Self.HospitalEspecialidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="IdHospital" />
+            </Principal>
+            <Dependent Role="HospitalEspecialidade">
+              <PropertyRef Name="IdHospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HospitalMedico_Hospital">
+          <End Role="Hospital" Type="Self.Hospital" Multiplicity="1" />
+          <End Role="HospitalMedico" Type="Self.HospitalMedico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="IdHospital" />
+            </Principal>
+            <Dependent Role="HospitalMedico">
+              <PropertyRef Name="IdHospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HospitalMedico_Medico">
+          <End Role="Medico" Type="Self.Medico" Multiplicity="1" />
+          <End Role="HospitalMedico" Type="Self.HospitalMedico" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Medico">
+              <PropertyRef Name="IdMedico" />
+            </Principal>
+            <Dependent Role="HospitalMedico">
+              <PropertyRef Name="IdMedico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idHospital">
+          <End Role="Hospital" Type="Self.Hospital" Multiplicity="0..1" />
+          <End Role="usuarioHospital" Type="Self.usuarioHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="IdHospital" />
+            </Principal>
+            <Dependent Role="usuarioHospital">
+              <PropertyRef Name="idHospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idUsuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="usuarioHospital" Type="Self.usuarioHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="usuarioHospital">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjetoTCCHospitalModelStoreContainer">
+          <EntitySet Name="Especialidade" EntityType="Self.Especialidade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hospital" EntityType="Self.Hospital" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HospitalEspecialidade" EntityType="Self.HospitalEspecialidade" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HospitalMedico" EntityType="Self.HospitalMedico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Medico" EntityType="Self.Medico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuarioHospital" EntityType="Self.usuarioHospital" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_HospitalEspecialidade_Especialidade" Association="Self.FK_HospitalEspecialidade_Especialidade">
+            <End Role="Especialidade" EntitySet="Especialidade" />
+            <End Role="HospitalEspecialidade" EntitySet="HospitalEspecialidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HospitalEspecialidade_Hospital" Association="Self.FK_HospitalEspecialidade_Hospital">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="HospitalEspecialidade" EntitySet="HospitalEspecialidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HospitalMedico_Hospital" Association="Self.FK_HospitalMedico_Hospital">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="HospitalMedico" EntitySet="HospitalMedico" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HospitalMedico_Medico" Association="Self.FK_HospitalMedico_Medico">
+            <End Role="Medico" EntitySet="Medico" />
+            <End Role="HospitalMedico" EntitySet="HospitalMedico" />
+          </AssociationSet>
+          <AssociationSet Name="idHospital" Association="Self.idHospital">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="usuarioHospital" EntitySet="usuarioHospital" />
+          </AssociationSet>
+          <AssociationSet Name="idUsuario" Association="Self.idUsuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="usuarioHospital" EntitySet="usuarioHospital" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjetoTCCHospitalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Especialidade">
+          <Key>
+            <PropertyRef Name="IdEspecialidade" />
+          </Key>
+          <Property Name="IdEspecialidade" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="HospitalEspecialidade" Relationship="Self.FK_HospitalEspecialidade_Especialidade" FromRole="Especialidade" ToRole="HospitalEspecialidade" />
+        </EntityType>
+        <EntityType Name="Hospital">
+          <Key>
+            <PropertyRef Name="IdHospital" />
+          </Key>
+          <Property Name="IdHospital" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Endereco" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Latidude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
+          <Property Name="Longitude" Type="Decimal" Precision="9" Scale="6" Nullable="false" />
+          <Property Name="Telefone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Telefone2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="HospitalEspecialidade" Relationship="Self.FK_HospitalEspecialidade_Hospital" FromRole="Hospital" ToRole="HospitalEspecialidade" />
+          <NavigationProperty Name="Medico" Relationship="Self.HospitalMedico" FromRole="Hospital" ToRole="Medico" />
+          <NavigationProperty Name="usuarioHospital" Relationship="ProjetoTCCHospitalModel.idHospital" FromRole="Hospital" ToRole="usuarioHospital" />
+        </EntityType>
+        <EntityType Name="HospitalEspecialidade">
+          <Key>
+            <PropertyRef Name="IdHospital" />
+            <PropertyRef Name="IdEspecialidade" />
+          </Key>
+          <Property Name="IdHospital" Type="Int32" Nullable="false" />
+          <Property Name="IdEspecialidade" Type="Int32" Nullable="false" />
+          <Property Name="HoraInicio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HoraFim" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Disponibilidade" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Especialidade" Relationship="Self.FK_HospitalEspecialidade_Especialidade" FromRole="HospitalEspecialidade" ToRole="Especialidade" />
+          <NavigationProperty Name="Hospital" Relationship="Self.FK_HospitalEspecialidade_Hospital" FromRole="HospitalEspecialidade" ToRole="Hospital" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="Medico">
+          <Key>
+            <PropertyRef Name="IdMedico" />
+          </Key>
+          <Property Name="IdMedico" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CRM" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Hospital" Relationship="Self.HospitalMedico" FromRole="Medico" ToRole="Hospital" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Senha" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="usuarioHospital" Relationship="ProjetoTCCHospitalModel.idUsuario" FromRole="Usuario" ToRole="usuarioHospital" />
+        </EntityType>
+        <Association Name="FK_HospitalEspecialidade_Especialidade">
+          <End Role="Especialidade" Type="Self.Especialidade" Multiplicity="1" />
+          <End Role="HospitalEspecialidade" Type="Self.HospitalEspecialidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidade">
+              <PropertyRef Name="IdEspecialidade" />
+            </Principal>
+            <Dependent Role="HospitalEspecialidade">
+              <PropertyRef Name="IdEspecialidade" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HospitalEspecialidade_Hospital">
+          <End Role="Hospital" Type="Self.Hospital" Multiplicity="1" />
+          <End Role="HospitalEspecialidade" Type="Self.HospitalEspecialidade" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="IdHospital" />
+            </Principal>
+            <Dependent Role="HospitalEspecialidade">
+              <PropertyRef Name="IdHospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="HospitalMedico">
+          <End Role="Hospital" Type="Self.Hospital" Multiplicity="*" />
+          <End Role="Medico" Type="Self.Medico" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="ProjetoTCCHospitalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Especialidade" EntityType="Self.Especialidade" />
+          <EntitySet Name="Hospital" EntityType="Self.Hospital" />
+          <EntitySet Name="HospitalEspecialidade" EntityType="Self.HospitalEspecialidade" />
+          <EntitySet Name="Medico" EntityType="Self.Medico" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_HospitalEspecialidade_Especialidade" Association="Self.FK_HospitalEspecialidade_Especialidade">
+            <End Role="Especialidade" EntitySet="Especialidade" />
+            <End Role="HospitalEspecialidade" EntitySet="HospitalEspecialidade" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HospitalEspecialidade_Hospital" Association="Self.FK_HospitalEspecialidade_Hospital">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="HospitalEspecialidade" EntitySet="HospitalEspecialidade" />
+          </AssociationSet>
+          <AssociationSet Name="HospitalMedico" Association="Self.HospitalMedico">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="Medico" EntitySet="Medico" />
+          </AssociationSet>
+          <EntitySet Name="usuarioHospital" EntityType="ProjetoTCCHospitalModel.usuarioHospital" />
+          <AssociationSet Name="idHospital" Association="ProjetoTCCHospitalModel.idHospital">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="usuarioHospital" EntitySet="usuarioHospital" />
+          </AssociationSet>
+          <AssociationSet Name="idUsuario" Association="ProjetoTCCHospitalModel.idUsuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="usuarioHospital" EntitySet="usuarioHospital" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="usuarioHospital">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="idHospital" Type="Int32" />
+          <Property Name="idUsuario" Type="Int32" />
+          <NavigationProperty Name="Hospital" Relationship="ProjetoTCCHospitalModel.idHospital" FromRole="usuarioHospital" ToRole="Hospital" />
+          <NavigationProperty Name="Usuario" Relationship="ProjetoTCCHospitalModel.idUsuario" FromRole="usuarioHospital" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="idHospital">
+          <End Type="ProjetoTCCHospitalModel.Hospital" Role="Hospital" Multiplicity="0..1" />
+          <End Type="ProjetoTCCHospitalModel.usuarioHospital" Role="usuarioHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="IdHospital" />
+            </Principal>
+            <Dependent Role="usuarioHospital">
+              <PropertyRef Name="idHospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="idUsuario">
+          <End Type="ProjetoTCCHospitalModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="ProjetoTCCHospitalModel.usuarioHospital" Role="usuarioHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="usuarioHospital">
+              <PropertyRef Name="idUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjetoTCCHospitalModelStoreContainer" CdmEntityContainer="ProjetoTCCHospitalEntities">
+          <EntitySetMapping Name="Especialidade">
+            <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.Especialidade">
+              <MappingFragment StoreEntitySet="Especialidade">
+                <ScalarProperty Name="IdEspecialidade" ColumnName="IdEspecialidade" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hospital">
+            <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.Hospital">
+              <MappingFragment StoreEntitySet="Hospital">
+                <ScalarProperty Name="IdHospital" ColumnName="IdHospital" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+                <ScalarProperty Name="Latidude" ColumnName="Latidude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="Telefone2" ColumnName="Telefone2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HospitalEspecialidade">
+            <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.HospitalEspecialidade">
+              <MappingFragment StoreEntitySet="HospitalEspecialidade">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="IdHospital" ColumnName="IdHospital" />
+                <ScalarProperty Name="IdEspecialidade" ColumnName="IdEspecialidade" />
+                <ScalarProperty Name="HoraInicio" ColumnName="HoraInicio" />
+                <ScalarProperty Name="HoraFim" ColumnName="HoraFim" />
+                <ScalarProperty Name="Disponibilidade" ColumnName="Disponibilidade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Medico">
+            <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.Medico">
+              <MappingFragment StoreEntitySet="Medico">
+                <ScalarProperty Name="IdMedico" ColumnName="IdMedico" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="CRM" ColumnName="CRM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Senha" ColumnName="Senha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="HospitalMedico" TypeName="ProjetoTCCHospitalModel.HospitalMedico" StoreEntitySet="HospitalMedico">
+            <EndProperty Name="Hospital">
+              <ScalarProperty Name="IdHospital" ColumnName="IdHospital" />
+            </EndProperty>
+            <EndProperty Name="Medico">
+              <ScalarProperty Name="IdMedico" ColumnName="IdMedico" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="usuarioHospital">
+            <EntityTypeMapping TypeName="ProjetoTCCHospitalModel.usuarioHospital">
+              <MappingFragment StoreEntitySet="usuarioHospital">
+                <ScalarProperty Name="idUsuario" ColumnName="idUsuario" />
+                <ScalarProperty Name="idHospital" ColumnName="idHospital" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

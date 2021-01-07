@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProjetoTCCHospitalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Especialidade">
+    <Key>
+      <PropertyRef Name="IdEspecialidade" />
+    </Key>
+    <Property Name="IdEspecialidade" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Descricao" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hospital">
+    <Key>
+      <PropertyRef Name="IdHospital" />
+    </Key>
+    <Property Name="IdHospital" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Endereco" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="Latidude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
+    <Property Name="Longitude" Type="decimal" Precision="9" Scale="6" Nullable="false" />
+    <Property Name="Telefone" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Telefone2" Type="varchar" MaxLength="20" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HospitalEspecialidade">
+    <Key>
+      <PropertyRef Name="IdHospital" />
+      <PropertyRef Name="IdEspecialidade" />
+    </Key>
+    <Property Name="IdHospital" Type="int" Nullable="false" />
+    <Property Name="IdEspecialidade" Type="int" Nullable="false" />
+    <Property Name="HoraInicio" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="HoraFim" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Disponibilidade" Type="bit" Nullable="false" />
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HospitalMedico">
+    <Key>
+      <PropertyRef Name="IdMedico" />
+      <PropertyRef Name="IdHospital" />
+    </Key>
+    <Property Name="IdMedico" Type="int" Nullable="false" />
+    <Property Name="IdHospital" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Medico">
+    <Key>
+      <PropertyRef Name="IdMedico" />
+    </Key>
+    <Property Name="IdMedico" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="CRM" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="IdUsuario" />
+    </Key>
+    <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Senha" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuarioHospital">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="idHospital" Type="int" />
+    <Property Name="idUsuario" Type="int" />
+  </EntityType>
+  <Association Name="FK_HospitalEspecialidade_Especialidade">
+    <End Role="Especialidade" Type="Self.Especialidade" Multiplicity="1" />
+    <End Role="HospitalEspecialidade" Type="Self.HospitalEspecialidade" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Especialidade">
+        <PropertyRef Name="IdEspecialidade" />
+      </Principal>
+      <Dependent Role="HospitalEspecialidade">
+        <PropertyRef Name="IdEspecialidade" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HospitalEspecialidade_Hospital">
+    <End Role="Hospital" Type="Self.Hospital" Multiplicity="1" />
+    <End Role="HospitalEspecialidade" Type="Self.HospitalEspecialidade" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hospital">
+        <PropertyRef Name="IdHospital" />
+      </Principal>
+      <Dependent Role="HospitalEspecialidade">
+        <PropertyRef Name="IdHospital" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HospitalMedico_Hospital">
+    <End Role="Hospital" Type="Self.Hospital" Multiplicity="1" />
+    <End Role="HospitalMedico" Type="Self.HospitalMedico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hospital">
+        <PropertyRef Name="IdHospital" />
+      </Principal>
+      <Dependent Role="HospitalMedico">
+        <PropertyRef Name="IdHospital" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HospitalMedico_Medico">
+    <End Role="Medico" Type="Self.Medico" Multiplicity="1" />
+    <End Role="HospitalMedico" Type="Self.HospitalMedico" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medico">
+        <PropertyRef Name="IdMedico" />
+      </Principal>
+      <Dependent Role="HospitalMedico">
+        <PropertyRef Name="IdMedico" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="idHospital">
+    <End Role="Hospital" Type="Self.Hospital" Multiplicity="0..1" />
+    <End Role="usuarioHospital" Type="Self.usuarioHospital" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hospital">
+        <PropertyRef Name="IdHospital" />
+      </Principal>
+      <Dependent Role="usuarioHospital">
+        <PropertyRef Name="idHospital" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="idUsuario">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+    <End Role="usuarioHospital" Type="Self.usuarioHospital" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="IdUsuario" />
+      </Principal>
+      <Dependent Role="usuarioHospital">
+        <PropertyRef Name="idUsuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ProjetoTCCHospitalModelStoreContainer">
+    <EntitySet Name="Especialidade" EntityType="Self.Especialidade" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hospital" EntityType="Self.Hospital" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HospitalEspecialidade" EntityType="Self.HospitalEspecialidade" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="HospitalMedico" EntityType="Self.HospitalMedico" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Medico" EntityType="Self.Medico" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuarioHospital" EntityType="Self.usuarioHospital" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_HospitalEspecialidade_Especialidade" Association="Self.FK_HospitalEspecialidade_Especialidade">
+      <End Role="Especialidade" EntitySet="Especialidade" />
+      <End Role="HospitalEspecialidade" EntitySet="HospitalEspecialidade" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HospitalEspecialidade_Hospital" Association="Self.FK_HospitalEspecialidade_Hospital">
+      <End Role="Hospital" EntitySet="Hospital" />
+      <End Role="HospitalEspecialidade" EntitySet="HospitalEspecialidade" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HospitalMedico_Hospital" Association="Self.FK_HospitalMedico_Hospital">
+      <End Role="Hospital" EntitySet="Hospital" />
+      <End Role="HospitalMedico" EntitySet="HospitalMedico" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HospitalMedico_Medico" Association="Self.FK_HospitalMedico_Medico">
+      <End Role="Medico" EntitySet="Medico" />
+      <End Role="HospitalMedico" EntitySet="HospitalMedico" />
+    </AssociationSet>
+    <AssociationSet Name="idHospital" Association="Self.idHospital">
+      <End Role="Hospital" EntitySet="Hospital" />
+      <End Role="usuarioHospital" EntitySet="usuarioHospital" />
+    </AssociationSet>
+    <AssociationSet Name="idUsuario" Association="Self.idUsuario">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="usuarioHospital" EntitySet="usuarioHospital" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

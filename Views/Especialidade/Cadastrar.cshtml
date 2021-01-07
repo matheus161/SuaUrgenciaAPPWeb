@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "Cadastrar";
+}
+
+<h2>Nome</h2>
+
+<form method="post">
+
+    <div class="text-center">
+        <img  />
+    </div>
+
+        @*<div>
+            @foreach (var item in ViewBag.listarHospitais)
+            {
+           <div>
+               <input type="radio" name="disponibilidade" id="disponibilidade" value="Disponivel Agora" />
+               <input type="text" name="nome" id="nome" value="@item.Especialidade.Nome" />
+               <input type="time" name="horaInicio" id="horaInicio" value="@item.HoraInicio"/>
+               <input type="time" name="horaFim" id="horaFim" value="@item.HoraFim"/>
+           </div>
+            }
+        </div>*@
+
+        <div>
+            @foreach (var item in  ((List<TCCSuaUrgenciaWEB.Models.HospitalEspecialidade>)ViewBag.especialidadesHospital))
+            {
+            <div> 
+
+                <input type="radio" name="disponibilidade" id="@item.id" value="@item.Disponibilidade" />
+                <input type="text" name="nome" id="@item.id" value="@item.Hospital.Nome" disabled/> @*@itm.id joga no id e puxa por ele*@
+                
+                <input type="text" name="especialidade" id="@item.id" value="@item.Especialidade.Nome" disabled />
+                
+                <input type="time" name="horaInicio" id="@item.id" value="@item.HoraInicio"/>
+                <input type="time" name="horaFim" @item.id value="@item.HoraFim"/>
+
+                <input type="submit" class="" name="btnSalvar" id="@item.id" value="Salvar"/>
+            </div>
+             }
+        </div>
+   
+</form>
